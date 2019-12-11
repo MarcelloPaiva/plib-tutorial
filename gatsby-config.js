@@ -1,11 +1,12 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    title: `Pattern Library Tutorial`,
+    description: `A tutorial to show how to build a pattern library using Gatsby and Netlify-CMS`,
+    author: `@marcello.paiva`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-material-ui`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
