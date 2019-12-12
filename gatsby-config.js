@@ -7,11 +7,12 @@ module.exports = {
   plugins: [
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-material-ui`,
+    `gatsby-plugin-netlify-cms`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `images`,
-        path: `${__dirname}/src/images`,
+        name: `pattern`,
+        path: `${__dirname}/src/pattern`,
       },
     },
     `gatsby-transformer-sharp`,
