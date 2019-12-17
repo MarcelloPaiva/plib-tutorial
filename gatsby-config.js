@@ -10,6 +10,25 @@ module.exports = {
     `gatsby-plugin-netlify-cms`,
     `gatsby-transformer-remark`,
     {
+      resolve: `@gatsby-contrib/gatsby-plugin-elasticlunr-search`,
+      options: {
+        // Fields to index
+        fields: [`title`, `tags`, `caption`, `category`, `subcategory`],
+        // How to resolve each field`s value for a supported node type
+        resolvers: {
+          // For any node of type MarkdownRemark, list how to resolve the fields` values
+          MarkdownRemark: {
+            title: node => node.frontmatter.title,
+            slug: node => node.fields.slug,
+            tags: node => node.frontmatter.tags,
+            caption: node => node.frontmatter.caption,
+            category: node => node.frontmatter.category,
+            subcategory: node => node.frontmatter.subcategory,
+          }
+        }
+      }
+    },    
+    {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `pattern`,
