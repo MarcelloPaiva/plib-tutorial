@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import Link from 'gatsby-link'
 import {
   makeStyles,
@@ -10,6 +10,9 @@ import {
   Hidden,
 } from '@material-ui/core'
 import { Index } from 'elasticlunr'
+import { ViewContext } from '../context/view'
+import CardView from '../components/card-view'
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles(theme => ({
   textField: {
@@ -61,6 +64,7 @@ const useStyles = makeStyles(theme => ({
 const Search = ({ data, searchIndex }) => {
   const [query, setQuery] = useState(``)
   const [results, setResults] = useState([])
+  const { cardView } = useContext(ViewContext)
   let index
 
   const classes = useStyles()
@@ -92,6 +96,15 @@ const Search = ({ data, searchIndex }) => {
       </li>
   )})
 
+  const cards = items => items.map((cardData, pIndex) => {
+    return (
+      <Grid item key={cardData.id} xs={6}>
+        <Link to={cardData.slug} className={classes.link}>
+          <CardView cardData={cardData}/>
+        </Link>
+      </Grid>
+  )})
+
   const getOrCreateIndex = () => {
     return index ? index : Index.load(searchIndex)
   }
@@ -117,9 +130,14 @@ const Search = ({ data, searchIndex }) => {
         value={query}
         onChange={handleSearch}
       />
-      <List className={classes.list}>
-        { query ? listItems(results) : listItems(patterns) }
-      </List>
+      {!cardView
+        ? (<List className={classes.list}>
+              { query ? listItems(results) : listItems(patterns) }
+            </List>)
+          : (<Grid container justify="center" align='center' spacing={1}>
+          { query ? cards(results) : cards(patterns) }
+        </Grid>)
+      }
     </>
   )
 }
